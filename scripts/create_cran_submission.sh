@@ -13,15 +13,14 @@ cp -r build betabinom
 cp -r inst betabinom
 cp -r man betabinom
 cp -r R betabinom
-cp -r src betabinom
+cp -r vignettes betabinom
+cp -r src betabinom # copy source (without binary blobs)
 rm betabinom/src/*.o
 rm betabinom/src/*.so
-cp -r vignettes betabinom
-cp DESCRIPTION betabinom
-cp LICENSE betabinom
-cp MD5 betabinom
-cp NAMESPACE betabinom
-cp cran-comments.md betabinom
+cp metadata/DESCRIPTION betabinom
+cp metadata/NAMESPACE betabinom
+cp metadata/LICENSE betabinom
+cp metadata/MD5 betabinom
 
 # run all CRAN checks
 R CMD CHECK --as-cran betabinom
