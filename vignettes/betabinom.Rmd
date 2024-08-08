@@ -31,7 +31,7 @@ The following are three complete examples, from reading input data in a tab-deli
 
 **Two-group beta-binomial test** (Pham et al., Bioinformatics 2010)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim("https://github.com/fulcrumgenomics/betabinom/data/example-3groups.txt?raw=true")
 
 head(d)
 #>    a1  a2  a3  b1  b2  b3  c1  c2
@@ -75,7 +75,7 @@ write.table(cbind(d, d.norm,
 
 **Three-group beta-binomial test** (Pham et al., Bioinformatics 2010)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim("https://github.com/fulcrumgenomics/betabinom/data/example-3groups.txt?raw=true")
 
 head(d)
 #>    a1  a2  a3  b1  b2  b3  c1  c2
@@ -121,7 +121,7 @@ write.table(cbind(d, d.norm,
 
 **Two-group paired beta-binomial test** (Pham \& Jimenez, Bioinformatics 2012)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-paired.txt")
+d <- read.delim("https://github.com/fulcrumgenomics/betabinom/data/example-paired.txt?raw=true")
 
 head(d)
 #>   pre.1 pre.2 pre.3 post.1 post.2 post.3
@@ -190,7 +190,7 @@ betabinom::bb.test(x, tx, group)
 
 The test can be applied to a data matrix row by row. The following example compares three groups, the first group consisting of columns 1 to 3 of a data matrix, the second columns 4 to 6, and the third columns 7 and 8.
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim("https://github.com/fulcrumgenomics/betabinom/data/example-3groups.txt?raw=true")
 
 # compare 3 groups, using all available CPU cores
 out <- betabinom::bb.test(d[, 1:8], 
@@ -305,7 +305,7 @@ betabinom::ibb.test(x, tx, group)
 
 Analogously to the unpaired situation, the test can be performed for a data matrix row by row. The following example compares two groups where columns 1 to 3 are respectively paired with columns 4 to 6.
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-paired.txt")
+d <- read.delim("https://github.com/fulcrumgenomics/betabinom/data/example-paired.txt?raw=true")
 
 # perform a paired test for all rows
 out <- betabinom::ibb.test(d[, 1:6], 
