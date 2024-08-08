@@ -1,11 +1,11 @@
 eb91a252332e246ec79d85b51af0f9e0 *DESCRIPTION
 5ea929cefab9c88b8b7bf1a2d67455ca *LICENSE
 77b0a9b7aa666823bc7fea32ce6c16f7 *NAMESPACE
-d5758b8d46be82366336082d6a455908 *R/countdata.R
+d5758b8d46be82366336082d6a455908 *R/betabinom.R
 8a967e9b1396a85bb4448dd6b8b03ca9 *build/vignette.rds
-bf98633b8910decbd003e013fd53379a *inst/doc/countdata.R
-fd3523afc9b01da12be6b404ed01d543 *inst/doc/countdata.Rmd
-183d00669e3fbbda79e9a7fe4d4dfb8a *inst/doc/countdata.html
+bf98633b8910decbd003e013fd53379a *inst/doc/betabinom.R
+fd3523afc9b01da12be6b404ed01d543 *inst/doc/betabinom.Rmd
+183d00669e3fbbda79e9a7fe4d4dfb8a *inst/doc/betabinom.html
 892244f4f1c0be1b652135408923f52e *man/bb.test.Rd
 a310cdb77c4c2bb44919b07e3c69092c *man/fold.change.Rd
 490f6e2964d9bbd82e064e500e9cae2f *man/ibb.test.Rd
@@ -15,4 +15,4 @@ a18000bc0c76a2bb452be2c4041332f1 *src/bb.c
 202585d15e7b10548d12337dbc7c84b2 *src/ibb.c
 46751c51de83d78a82e73def7b42e3ff *src/q15.h
 48a61a55e6c29e43ff7275c0afb465da *src/registerDynamicSymbol.c
-fd3523afc9b01da12be6b404ed01d543 *vignettes/countdata.Rmd
+fd3523afc9b01da12be6b404ed01d543 *vignettes/betabinom.Rmd

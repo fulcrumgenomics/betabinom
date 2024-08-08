@@ -3,6 +3,10 @@
 # clean previous CRAN build
 rm -rf betabinom
 
+# move new vignette build to expected location
+mv Meta/* build
+mv doc/* inst/doc
+
 # create new CRAN build
 mkdir betabinom
 cp -r build betabinom

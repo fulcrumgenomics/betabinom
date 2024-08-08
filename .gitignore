@@ -3,3 +3,6 @@
 betabinom
 betabinom.Rcheck
 src/symbols.rds
+.Rbuildignore
+/doc/
+/Meta/
