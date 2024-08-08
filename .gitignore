@@ -1,0 +1,5 @@
+*.o
+*.so
+betabinom
+betabinom.Rcheck
+src/symbols.rds
