@@ -1,10 +1,10 @@
 ---
-title: "The Beta-Binomial Test for Count Data"
+title: "betabinom: The Beta-Binomial Test for Count Data"
 author: "Thang V Pham"
 date: "2021-01-24"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{countdata: The Beta-Binomial Test for Count Data}
+  %\VignetteIndexEntry{betabinom: The Beta-Binomial Test for Count Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,21 +17,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-A number of technology platforms in proteomics and genomics produce count data for quantitative analysis. In proteomics, the number of MS/MS events observed for a protein in a mass spectrometry experiment has been shown to correlate strongly with the protein's abundance. In genomics, next-generation sequencing technologies use read counts as a measure of the abundance of the target transcripts. The R package _countdata_ contains functions for statistical significance analysis of count data for both paired and unpaired designs.
+A number of technology platforms in proteomics and genomics produce count data for quantitative analysis. In proteomics, the number of MS/MS events observed for a protein in a mass spectrometry experiment has been shown to correlate strongly with the protein's abundance. In genomics, next-generation sequencing technologies use read counts as a measure of the abundance of the target transcripts. The R package _betabinom_ contains functions for statistical significance analysis of count data for both paired and unpaired designs.
 
 ## Quick start
 
-The user needs to install the package once, most likely by entering `install.packages("countdata")` in the R console, and load the package before use.
+The user needs to install the package once, most likely by entering `install.packages("betabinom")` in the R console, and load the package before use.
 
 ```{r setup}
-library(countdata)
+library(betabinom)
 ```
 
 The following are three complete examples, from reading input data in a tab-deliminated text format to writing the result to a local text file `output.txt`. The output column `pval` contains the p-values of the test and the column `pval.BH` contains the p-values adjusted for multiple testing using the Benjamini-Hochberg method (Benjamini \& Hochberg, 1995).
 
 **Two-group beta-binomial test** (Pham et al., Bioinformatics 2010)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim(system.file("extdata", "example-3groups.txt", package="betabinom"))
 
 head(d)
 #>    a1  a2  a3  b1  b2  b3  c1  c2
@@ -43,7 +43,7 @@ head(d)
 #> 6 482 348 400 242 365 367  81 118
 
 # compare the first 3 samples against the next three samples
-out <- countdata::bb.test(d[, 1:6], 
+out <- betabinom::bb.test(d[, 1:6], 
                           colSums(d[, 1:6]), 
                           c(rep("a", 3), rep("b", 3)))
 #> Using 11 thread(s) ...
@@ -64,10 +64,10 @@ out <- countdata::bb.test(d[, 1:6],
 #> 98%
 #> Done.
 
-d.norm <-  countdata::normalize(d[, 1:8])
+d.norm <-  betabinom::normalize(d[, 1:8])
 
 write.table(cbind(d, d.norm, 
-                  fc = countdata::fold.change(d.norm[, 1:3], d.norm[, 4:6]),
+                  fc = betabinom::fold.change(d.norm[, 1:3], d.norm[, 4:6]),
                   pval = out$p.value,
                   pval.BH = p.adjust(out$p.value, method = "BH")),
             file = "output.txt", row.names = FALSE, sep = "\t")
@@ -75,7 +75,7 @@ write.table(cbind(d, d.norm,
 
 **Three-group beta-binomial test** (Pham et al., Bioinformatics 2010)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim(system.file("extdata", "example-3groups.txt", package="betabinom"))
 
 head(d)
 #>    a1  a2  a3  b1  b2  b3  c1  c2
@@ -87,7 +87,7 @@ head(d)
 #> 6 482 348 400 242 365 367  81 118
 
 # compare the first 3 samples, the next three samples, and the last two samples.
-out <- countdata::bb.test(d[, 1:8],
+out <- betabinom::bb.test(d[, 1:8],
                           colSums(d[, 1:8]),
                           c(rep("a", 3), rep("b", 3), rep("c", 2)))
 #> Using 11 thread(s) ...
@@ -111,7 +111,7 @@ out <- countdata::bb.test(d[, 1:8],
 #> 98%
 #> Done.
 
-d.norm <-  countdata::normalize(d[, 1:8])
+d.norm <-  betabinom::normalize(d[, 1:8])
 
 write.table(cbind(d, d.norm, 
                   pval = out$p.value,
@@ -121,7 +121,7 @@ write.table(cbind(d, d.norm,
 
 **Two-group paired beta-binomial test** (Pham \& Jimenez, Bioinformatics 2012)
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-paired.txt")
+d <- read.delim(system.file("extdata", "example-paired.txt", package="betabinom"))
 
 head(d)
 #>   pre.1 pre.2 pre.3 post.1 post.2 post.3
@@ -132,7 +132,7 @@ head(d)
 #> 5   396   271   171    327    216    103
 #> 6   238   261   271    245    234    215
 
-out <- countdata::ibb.test(d[, 1:6], 
+out <- betabinom::ibb.test(d[, 1:6], 
                            colSums(d[, 1:6]), 
                            c(rep("pre_treatment", 3), rep("post_treatment", 3)))
 #> Using 11 thread(s) ...
@@ -159,7 +159,7 @@ out <- countdata::ibb.test(d[, 1:6],
 #> 99%
 #> Done.
 
-d.norm <-  countdata::normalize(d[, 1:6])
+d.norm <-  betabinom::normalize(d[, 1:6])
 
 write.table(cbind(d, d.norm, 
                   fc = out$fc,
@@ -179,7 +179,7 @@ tx <- c(19609, 19053, 19235, 19374, 18868, 19018, 18844, 19271)
 
 group <- c(rep("cancer", 3), rep("normal", 5))
 
-countdata::bb.test(x, tx, group)
+betabinom::bb.test(x, tx, group)
 #> Using a single CPU core ...
 #> No. of data rows = 1, no. of groups = 2, no. of samples = 8...
 #> 100%
@@ -190,10 +190,10 @@ countdata::bb.test(x, tx, group)
 
 The test can be applied to a data matrix row by row. The following example compares three groups, the first group consisting of columns 1 to 3 of a data matrix, the second columns 4 to 6, and the third columns 7 and 8.
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-3groups.txt")
+d <- read.delim(system.file("extdata", "example-3groups.txt", package="betabinom"))
 
 # compare 3 groups, using all available CPU cores
-out <- countdata::bb.test(d[, 1:8], 
+out <- betabinom::bb.test(d[, 1:8], 
                           colSums(d[, 1:8]), 
                           c(rep("a", 3), rep("b", 3), rep("c", 2)))
 #> Using 11 thread(s) ...
@@ -226,7 +226,7 @@ pval.BH <- p.adjust(out$p.value, method = "BH")
 
 The beta-binomial test takes **raw counts as input** and normalizes the values internally. To obtain normalized values, we multiply each sample by a scaling factor so that the total counts are equal across samples. This procedure is implemented in the `normalize` function.
 ```{r}
-d.norm <-  countdata::normalize(d[, 1:8])
+d.norm <-  betabinom::normalize(d[, 1:8])
 
 # check -- all values should be equal
 colSums(d.norm)
@@ -257,9 +257,9 @@ head(cbind(d.norm, out$p.value))
 
 The package provides a convenient function to calculate the ratio between the averages of two sample groups row by row. For example, to calculate the fold change between all group pairs
 ```{r}
-fc12 <- countdata::fold.change(d.norm[, 1:3], d.norm[, 4:6])
-fc13 <- countdata::fold.change(d.norm[, 1:3], d.norm[, 7:8])
-fc23 <- countdata::fold.change(d.norm[, 4:6], d.norm[, 7:8], BIG = 100)
+fc12 <- betabinom::fold.change(d.norm[, 1:3], d.norm[, 4:6])
+fc13 <- betabinom::fold.change(d.norm[, 1:3], d.norm[, 7:8])
+fc23 <- betabinom::fold.change(d.norm[, 4:6], d.norm[, 7:8], BIG = 100)
 
 head(cbind(d.norm, out$p.value, fc12, fc13, fc23))
 #>         a1       a2       a3       b1       b2       b3        c1       c2
@@ -291,7 +291,7 @@ tx <- c(7742608, 15581382, 20933491, 7126839, 13842297, 14760103)
 
 group <- c(rep("cancer", 3), rep("normal", 3))
 
-countdata::ibb.test(x, tx, group)
+betabinom::ibb.test(x, tx, group)
 #> Using a single CPU core ...
 #> No. of data rows = 1, no. of pair(s) = 3...
 #> 100%
@@ -305,10 +305,10 @@ countdata::ibb.test(x, tx, group)
 
 Analogously to the unpaired situation, the test can be performed for a data matrix row by row. The following example compares two groups where columns 1 to 3 are respectively paired with columns 4 to 6.
 ```{r}
-d <- read.delim("https://tvpham.github.io/data/example-paired.txt")
+d <- read.delim(system.file("extdata", "example-paired.txt", package="betabinom"))
 
 # perform a paired test for all rows
-out <- countdata::ibb.test(d[, 1:6], 
+out <- betabinom::ibb.test(d[, 1:6], 
                            colSums(d[, 1:6]), 
                            c(rep("pre_treatment", 3), rep("post_treatment", 3)))
 #> Using 11 thread(s) ...
@@ -338,7 +338,7 @@ out <- countdata::ibb.test(d[, 1:6],
 
 The result `out` is a list of two elements where `p.value` is the p-value of the test and `fc` an estimation of the common fold change. We can calculate the normalized data and write out the result as follows.
 ```{r}
-d.norm <- countdata::normalize(d[, 1:6])
+d.norm <- betabinom::normalize(d[, 1:6])
 
 head(cbind(d.norm, out$p.value, out$fc))
 #>      pre.1    pre.2    pre.3   post.1   post.2   post.3 out$p.value    out$fc
