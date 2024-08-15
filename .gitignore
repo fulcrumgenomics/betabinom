@@ -1,0 +1,7 @@
+src/symbols.rds
+src/*.o
+src/*.so
+*.Rcheck
+*.tar.gz
+/doc/
+/Meta/
