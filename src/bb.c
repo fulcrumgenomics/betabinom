@@ -172,8 +172,10 @@ void bb_simple_estimate_tm(bb_t* x,
     if (p < SMALL) {
         *alp = (TYPE)1.0;
         *bet = (TYPE)1e4;
-    }
-    else {
+    } else if (p > (TYPE)1.0 - SMALL) {
+        *alp = (TYPE)1e4;
+        *bet = (TYPE)1.0;
+    } else {
 
         TYPE s;
 
@@ -539,7 +541,7 @@ TYPE bbmle_equal(bb_t* x, TYPE alp, TYPE bet) {
 
     TYPE s;
 
-    if (alp < (TYPE)0.0) { // not initialize
+    if (alp < (TYPE)0.0) { // not initialized
 
         s = (TYPE)0.0;
 
@@ -645,7 +647,6 @@ void do_bb_test(bb_t* x) {
     if (x->theta_equal > 0) {
 
         TYPE f_init1 = bbmle_equal(x, alp0, bet0);
-
         int comp = x->_m1_array[0] > x->_m1_array[1];
 
         TYPE f_init2 = bbmle_equal(x, (TYPE)-1.0, (TYPE)-1.0);
@@ -816,10 +817,11 @@ void bb(int* lK,
 
         do_bb_test(&x);
 
+        // abs is necessary because the expression may be *slightly* negative due to 
+        // precision, and avoids a NaN error when calling sqrt(g)
+        double g = 2.0 * fabs((double)x.f - (double)x.f0);
 
-        double g = 2.0 * ((double)x.f - (double)x.f0);
-
-        if (tail > 0.5) {
+        if (tail > 0.5) { // right-sided test
             if (!x.comp) {
                 pval[i] = pnorm(sqrt(g), 0.0, 1.0, 0, 0);
             }
@@ -828,7 +830,7 @@ void bb(int* lK,
             }
         }
         else {
-            if (tail < -0.5) {
+            if (tail < -0.5) { // left-sided test
                 if (!x.comp) {
                     pval[i] = pnorm(sqrt(g), 0.0, 1.0, 1, 0);
                 }
@@ -836,7 +838,7 @@ void bb(int* lK,
                     pval[i] = pnorm(-sqrt(g), 0.0, 1.0, 1, 0);
                 }
             }
-            else {
+            else { // two-sided test
                 pval[i] = pchisq(g, (double)*lM - 1.0, 0, 0);
             }
         }
