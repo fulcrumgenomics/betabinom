@@ -1,4 +1,3 @@
-
 #######################################################################
 #
 # Author: Thang V. Pham, t.pham@vumc.nl
@@ -6,7 +5,9 @@
 #
 # Citation for the beta-binomial test:
 #
-# Pham TV, Piersma SR, Warmoes M, Jimenez CR (2010) On the beta binomial model for analysis of spectral count data in label-free tandem mass spectrometry-based proteomics. Bioinformatics, 26(3):363-369.
+# Pham TV, Piersma SR, Warmoes M, Jimenez CR (2010) On the beta binomial model for analysis of
+# spectral count data in label-free tandem mass spectrometry-based proteomics.
+# Bioinformatics, 26(3):363-369.
 #
 #######################################################################
 
@@ -16,17 +17,16 @@ bb.test <- function(x,
                     alternative = c("two.sided", "less", "greater"),
                     n.threads = -1,
                     verbose = TRUE) {
-
-    #check x & tx
-    if (any(tx <= 0))  {
+    # check x & tx
+    if (any(tx <= 0)) {
         stop("tx must be positive.\n")
     }
 
-    if (any(x < 0))  {
+    if (any(x < 0)) {
         stop("x must be non-negative.\n")
     }
 
-    #making matrices
+    # making matrices
     if (is.vector(x)) {
         x <- matrix(x, nrow = 1)
     }
@@ -62,14 +62,14 @@ bb.test <- function(x,
 
     g.size <- double(M)
     g.ind <- double(M)
-    g.list <- vector('list', M)
+    g.list <- vector("list", M)
 
 
     for (i in 1:M) {
         igroup <- which(gf == group.values[i])
-        g.size[i] <- length(igroup);
+        g.size[i] <- length(igroup)
         if (i > 1) {
-            g.ind[i] <- g.ind[i-1] + g.size[i-1]
+            g.ind[i] <- g.ind[i - 1] + g.size[i - 1]
         }
         g.list[[i]] <- igroup
     }
@@ -78,8 +78,8 @@ bb.test <- function(x,
     ## prepare C call
 
     N <- ncol(x)
-    a <- double(K*N)
-    ta <- double(K*N)
+    a <- double(K * N)
+    ta <- double(K * N)
 
     ind.beg <- 1
 
@@ -92,8 +92,8 @@ bb.test <- function(x,
         }
     }
 
-    block <- 2*N + M; # magic
-    factor <- 1;      # sizeof(TYPE) / sizeof(double)
+    block <- 2 * N + M # magic
+    factor <- 1 # sizeof(TYPE) / sizeof(double)
 
     max.threads <- .set.no.thread(n.threads, nrow(x))
 
@@ -104,18 +104,16 @@ bb.test <- function(x,
     alternative <- match.arg(alternative)
 
     if (alternative == "two.sided") {
-        mem[2] <- 0;
-    }
-    else {
+        mem[2] <- 0
+    } else {
         if (M != 2) {
             stop("One-sided test for two groups only !!!")
         }
 
         if (alternative == "less") {
-            mem[2] <- -1;
-        }
-        else {
-            mem[2] <- 1;
+            mem[2] <- -1
+        } else {
+            mem[2] <- 1
         }
     }
 
@@ -124,18 +122,18 @@ bb.test <- function(x,
     }
 
     out <- .C("bb",
-              as.integer(K),
-              as.double(a),
-              as.double(ta),
-              as.integer(M),
-              as.integer(g.size),
-              as.integer(g.ind),
-              as.double(mem),
-              as.integer(max.threads),
-              p.value = double(K))
+        as.integer(K),
+        as.double(a),
+        as.double(ta),
+        as.integer(M),
+        as.integer(g.size),
+        as.integer(g.ind),
+        as.double(mem),
+        as.integer(max.threads),
+        p.value = double(K)
+    )
 
     p.value <- out$p.value
 
-    return (list(p.value = p.value))
-
+    return(list(p.value = p.value))
 }

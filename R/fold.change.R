@@ -1,4 +1,3 @@
-
 fold.change <- function(d1, d2, BIG = 1e4) {
     # fold change will be in range (-inf, -1) [1, inf)
     # and fold change for zeroed rows will be -BIG or BIG
@@ -21,9 +20,9 @@ fold.change <- function(d1, d2, BIG = 1e4) {
     # for each row, calculate fold change (in avg value across cols)
     val <- matrix(0, nrow(d1), 1)
 
-    for (i in 1:nrow(d1)) {
-        v1 <- sum(d1[i,]) / ncol(d1)
-        v2 <- sum(d2[i,]) / ncol(d2)
+    for (i in seq_len(nrow(d1))) {
+        v1 <- sum(d1[i, ]) / ncol(d1)
+        v2 <- sum(d2[i, ]) / ncol(d2)
 
         if (v1 == 0) {
             if (v2 == 0) { # no data in either, fold.change = 1
@@ -31,17 +30,15 @@ fold.change <- function(d1, d2, BIG = 1e4) {
             } else { # no data in v1, avoid dividing by zero
                 val[i] <- BIG
             }
-
         } else {
             if (v2 == 0) { # no data in v2, avoid dividing by zero
                 val[i] <- -BIG
-
             } else { # calculate fold change
                 if (v1 > v2) {
-                    val[i] <- -v1/v2
+                    val[i] <- -v1 / v2
                 } else {
                     if (v1 < v2) {
-                        val[i] <- v2/v1
+                        val[i] <- v2 / v1
                     } else { # v2 == v1
                         val[i] <- 1
                     }
@@ -52,4 +49,3 @@ fold.change <- function(d1, d2, BIG = 1e4) {
 
     return(val)
 }
-

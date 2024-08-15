@@ -21,15 +21,15 @@ test_that("fold.change allows overriding BIG", {
 
 test_that("fold.change works with vectors", {
     a <- c(1, 2, 3)
-    b <- matrix(c(1, 2, 3, 3, 6, 21), nrow=length(a))
-    c <- matrix(c(2,2,4), nrow=length(a))
+    b <- matrix(c(1, 2, 3, 3, 6, 21), nrow = length(a))
+    c <- matrix(c(2, 2, 4), nrow = length(a))
     expect_equal(fold.change(a, b), c)
 })
 
 test_that("fold.change works with scalars", {
     a <- 2
-    b <- matrix(c(1), nrow=length(a))
-    c <- matrix(c(-2), nrow=length(a))
+    b <- matrix(c(1), nrow = length(a))
+    c <- matrix(c(-2), nrow = length(a))
     expect_equal(fold.change(a, b), c)
 })
 
