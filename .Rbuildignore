@@ -1,0 +1,10 @@
+^doc$
+^docs$
+^Meta$
+^src/*.o$
+^src/*.so$
+^scripts$
+^.*\.Rcheck$
+^\.git$
+^\.gitignore$
+^\.github$
