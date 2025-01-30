@@ -4,6 +4,16 @@
 [![Codecov test coverage](https://codecov.io/gh/fulcrumgenomics/betabinomial/graph/badge.svg)](https://app.codecov.io/gh/fulcrumgenomics/betabinomial)
 <!-- badges: end -->
 
+<p>
+<a href float="left"="https://fulcrumgenomics.com"><img src=".github/logos/fulcrumgenomics.svg" alt="Fulcrum Genomics" height="100"/></a>
+</p>
+
+[Visit us at Fulcrum Genomics](www.fulcrumgenomics.com) to learn more about how we can power your Bioinformatics with betabinom and beyond.
+
+<a href="mailto:contact@fulcrumgenomics.com?subject=[GitHub inquiry]"><img src="https://img.shields.io/badge/Email_us-brightgreen.svg?&style=for-the-badge&logo=gmail&logoColor=white"/></a>
+<a href="https://www.fulcrumgenomics.com"><img src="https://img.shields.io/badge/Visit_Us-blue.svg?&style=for-the-badge&logo=wordpress&logoColor=white"/></a>
+
+
 ## About
 This is a maintained fork of [countdata](https://CRAN.R-project.org/package=countdata). 
 It was originally published by [Thang Pham](https://orcid.org/0000-0003-0333-2492) (t.pham@amsterdamumc.nl) under a [BSD 3-Clause](https://opensource.org/license/bsd-3-clause) [license](LICENSE).
