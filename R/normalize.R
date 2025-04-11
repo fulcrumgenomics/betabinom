@@ -9,5 +9,5 @@ normalize <- function(d) {
     m <- mean(total)
     factor <- total / m
     dnorm <- d / (matrix(1, nrow(d), 1) %*% factor)
-    return(dnorm)
+    dnorm
 }
