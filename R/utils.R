@@ -1,7 +1,7 @@
 .ncores <- function() {
     out <- .C("bbCores", ncores = as.integer(0))
 
-    return(out$ncores)
+    out$ncores
 }
 
 
@@ -27,5 +27,5 @@
         out <- max.thread
     }
 
-    return(out)
+    out
 }
