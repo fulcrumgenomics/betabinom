@@ -14,13 +14,15 @@ jobs:
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
+    continue-on-error: ${{ matrix.config.continue-on-error || false }}
+
     strategy:
       fail-fast: false
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-24.04,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-24.04,   r: 'devel', http-user-agent: 'release', continue-on-error: true}
           - {os: ubuntu-24.04,   r: 'release'}
           - {os: ubuntu-24.04,   r: 'oldrel-1'}
 

@@ -47,5 +47,5 @@ fold.change <- function(d1, d2, BIG = 1e4) {
         }
     }
 
-    return(val)
+    val
 }

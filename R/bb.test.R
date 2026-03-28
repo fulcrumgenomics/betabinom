@@ -135,5 +135,5 @@ bb.test <- function(x,
 
     p.value <- out$p.value
 
-    return(list(p.value = p.value))
+    list(p.value = p.value)
 }
