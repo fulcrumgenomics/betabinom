@@ -144,5 +144,5 @@ ibb.test <- function(x,
         fc[total_g1 == 0 & total_g2 == 0] <- 1
     }
 
-    return(list(p.value = p.value, fc = fc))
+    list(p.value = p.value, fc = fc)
 }
